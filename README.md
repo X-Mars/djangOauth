@@ -5,10 +5,11 @@
 1. 基于 django-rest-framework-jwt 
 2. 实现 用户名的统一认证
 
-### 运行环境
+### 开发环境
 
-Djnago >= 2
-Python >= 3 
+Djnago >= 2    
+Python >= 3     
+Mysql = 5.7.16    
 
 ### 工作方式
 
