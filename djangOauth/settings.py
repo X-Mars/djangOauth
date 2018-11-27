@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 import datetime
+import ldap
+from django_auth_ldap.config import LDAPSearch, GroupOfNamesType, PosixGroupType, LDAPGroupType
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -157,3 +159,45 @@ JWT_AUTH = {
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(seconds=600),
     'JWT_ALLOW_REFRESH': True,
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+
+AUTH_LDAP_SERVER_URI = 'ldap://openldap.com'
+
+AUTH_LDAP_BIND_DN = 'cn=Manager,dc=xwjrops,dc=cn'
+AUTH_LDAP_BIND_PASSWORD = 'password'
+
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    'ou=Technology,dc=xwjrops,dc=cn',
+    ldap.SCOPE_SUBTREE,
+    '(uid=%(user)s)',
+)
+
+# AUTH_LDAP_GROUP_SEARCH = LDAPSearch(
+#     'ou=xwjroauth,ou=Groups,dc=xwjrops,dc=cn',
+#     ldap.SCOPE_SUBTREE,
+#     '(objectClass=posixGroup)',
+# )
+#
+# AUTH_LDAP_GROUP_TYPE = PosixGroupType(name_attr='cn')
+#
+# AUTH_LDAP_REQUIRE_GROUP = 'cn=enabled,ou=xwjroauth,ou=Groups,dc=xwjrops,dc=cn'
+# AUTH_LDAP_DENY_GROUP = 'cn=disabled,ou=xwjroauth,ou=Groups,dc=xwjrops,dc=cn'
+
+# AUTH_LDAP_FIND_GROUP_PERMS = True
+# AUTH_LDAP_MIRROR_GROUPS = True
+
+AUTH_LDAP_USER_ATTR_MAP = {
+    'first_name': 'givenName',
+    'last_name': 'sn',
+    'email': 'mail',
+}
+
+# AUTH_LDAP_USER_FLAGS_BY_GROUP = {
+#     'is_active': 'cn=active,ou=xwjroauth,ou=Groups,dc=xwjrops,dc=cn',
+#     'is_staff': 'cn=staff,ou=xwjroauth,ou=Groups,dc=xwjrops,dc=cn',
+#     'is_superuser': 'cn=superuser,ou=xwjroauth,ou=Groups,dc=xwjrops,dc=cn',
+# }

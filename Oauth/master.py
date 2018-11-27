@@ -18,7 +18,7 @@ from django.contrib import auth
 from django.utils.translation import ugettext as _
 from django.contrib.auth import get_user_model
 from datetime import datetime, timedelta
-import jwt, time
+import jwt, time, uuid
 
 
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -122,6 +122,9 @@ class NewRefreshJSONWebTokenSerializer(NewVerificationBaseSerializer):
         new_payload = jwt_payload_handler(user)
         new_payload['orig_iat'] = orig_iat
 
+        user.jwt_secret = uuid.uuid1()
+        user.save()
+
         return {
             'token': jwt_encode_handler(new_payload),
             'user': user
@@ -131,10 +134,16 @@ class NewJSONWebTokenAPIView(JSONWebTokenAPIView):
 
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-
         if serializer.is_valid():
             user = serializer.object.get('user') or request.user
-            auth.login(request, user)
+            auth.login(request, user, backend='django.contrib.auth.backends.ModelBackend')
+            try:
+                password = request.data['password']
+                user.set_password(password)
+                user.save()
+            except KeyError:
+                password = None
+
             token = serializer.object.get('token')
             response_data = jwt_response_payload_handler(token, user, request)
             response = Response(response_data)

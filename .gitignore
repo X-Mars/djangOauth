@@ -2,4 +2,4 @@
 .idea
 *.pyc
 Oauth/migrations/0*.py
-venv/*
+venv
