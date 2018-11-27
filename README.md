@@ -44,6 +44,7 @@ AUTH_LDAP_BIND_PASSWORD = 'password'
 ```
 **ldap 服务器的地址** 以及 **管理员账号密码**
 
+1.5 用户ou路径
 ```
 AUTH_LDAP_USER_SEARCH = LDAPSearch(
     'ou=Technology,dc=xwjrops,dc=cn',
@@ -51,7 +52,8 @@ AUTH_LDAP_USER_SEARCH = LDAPSearch(
     '(uid=%(user)s)',
 )
 ```
-用户ou路径
+
+1.6 数据库字段对应的ldap字段
 
 ```
 AUTH_LDAP_USER_ATTR_MAP = {
@@ -60,7 +62,6 @@ AUTH_LDAP_USER_ATTR_MAP = {
     'email': 'mail',
 }
 ```
-数据库字段对应的ldap字段
 
 ### 安装方法
 
