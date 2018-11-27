@@ -88,5 +88,3 @@ http://ip:8000/admin
 http://ip:8000/api/doc/
 ```
 
-### 待完善
-1. 对接openldap
