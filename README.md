@@ -22,45 +22,45 @@ Mysql = 5.7.16
 
 
 ### 配置说明
+    
+1. **JWT_EXPIRATION_DELTA** : 控制token过期时间；     
+2. **JWT_REFRESH_EXPIRATION_DELTA** : token过期多长时间内，可以通过过期token获取新token    
+3. 后端验证方式 设置
+```
+AUTHENTICATION_BACKENDS = [
+    'django_auth_ldap.backend.LDAPBackend',
+    'django.contrib.auth.backends.ModelBackend'
+]
+```
+第一个 **LDAPBackend** 验证失败，则继续使用 **ModelBackend** 进行验证
 
-1. **setting.py**：     
-1.1 **JWT_EXPIRATION_DELTA** : 控制token过期时间；     
-1.2 **JWT_REFRESH_EXPIRATION_DELTA** : token过期多长时间内，可以通过过期token获取新token    
-1.3 后端验证方式 设置
-	```
-	AUTHENTICATION_BACKENDS = [
-	    'django_auth_ldap.backend.LDAPBackend',
-	    'django.contrib.auth.backends.ModelBackend'
-	]
-	```
-	第一个 **LDAPBackend** 验证失败，则继续使用 **ModelBackend** 进行验证
+4. ldap 服务器配置
+```
+AUTH_LDAP_SERVER_URI = 'ldap://openldap.com'
 
-1.4 ldap 服务器配置
-	```
-	AUTH_LDAP_SERVER_URI = 'ldap://openldap.com'
-	AUTH_LDAP_BIND_DN = 'cn=Manager,dc=xwjrops,dc=cn'
-	AUTH_LDAP_BIND_PASSWORD = 'password'
-	```
-	**ldap 服务器的地址** 以及 **管理员账号密码**
+AUTH_LDAP_BIND_DN = 'cn=Manager,dc=xwjrops,dc=cn'
+AUTH_LDAP_BIND_PASSWORD = 'password'
+```
+**ldap 服务器的地址** 以及 **管理员账号密码**
 
-1.5 用户ou路径
-	```
-	AUTH_LDAP_USER_SEARCH = LDAPSearch(
-	    'ou=Technology,dc=xwjrops,dc=cn',
-	    ldap.SCOPE_SUBTREE,
-	    '(uid=%(user)s)',
-	)
-	```
+5. 用户ou路径
+```
+AUTH_LDAP_USER_SEARCH = LDAPSearch(
+    'ou=Technology,dc=xwjrops,dc=cn',
+    ldap.SCOPE_SUBTREE,
+    '(uid=%(user)s)',
+)
+```
 
-1.6 数据库字段对应的ldap字段
+6. 数据库字段对应的ldap字段
 
-	```
-	AUTH_LDAP_USER_ATTR_MAP = {
-	    'first_name': 'givenName',
-	    'last_name': 'sn',
-	    'email': 'mail',
-	}
-	```
+```
+AUTH_LDAP_USER_ATTR_MAP = {
+    'first_name': 'givenName',
+    'last_name': 'sn',
+    'email': 'mail',
+}
+```
 
 ### 安装方法
 
