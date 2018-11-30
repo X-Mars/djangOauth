@@ -88,3 +88,5 @@ http://ip:8000/admin
 http://ip:8000/api/doc/
 ```
 
+### 准备做
+1. 添加ldap组同步
