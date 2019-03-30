@@ -91,3 +91,7 @@ http://ip:8000/admin
 ```url
 http://ip:8000/api/doc/
 ```
+
+License
+---
+[996ICU License](LICENSE)  
