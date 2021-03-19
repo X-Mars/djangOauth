@@ -5,7 +5,7 @@ coreschema==0.0.4
 Django==2.2.13
 django-auth-ldap==1.7.0
 django-rest-swagger==2.2.0
-djangorestframework==3.9.1
+djangorestframework==3.11.2
 djangorestframework-jwt==1.11.0
 idna==2.7
 itypes==1.1.0
